@@ -1,0 +1,12 @@
+{:source-paths
+ ["src"]
+
+ :dependencies
+ [[reagent "1.2.0"]]
+
+ :builds
+ {:foo {:target :browser
+        :modules {:main {:init-fn foo.core/init}}}}
+
+ :dev-http {9000 "public"}
+ }
