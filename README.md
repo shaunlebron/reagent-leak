@@ -6,7 +6,5 @@ Minimal reproducible example for a memory leak, _[reagent issue #637](https://gi
 4. Observe Devtools > Memory tab > JS Heap Size
     * WARNING: JS Heap will quickly reach 2gb and climb until crashing
 
-Discussions:
-Slack discussion thread:
+Discussion:
 - <https://clojurians.slack.com/archives/C0620C0C8/p1755961982494269>
-- 
