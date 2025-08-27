@@ -4,7 +4,8 @@
   (:require
     [cljs.core.async :refer [timeout <!]]
     [reagent.core :as r]
-    [reagent.dom :as dom]))
+    [reagent.dom :as rd]
+    [reagent.dom.client :as rdc]))
 
 (defonce obj* (r/atom nil))
 
@@ -23,8 +24,14 @@
 (def objs [(make-obj)
            (make-obj)])
 
+(def REACT_VERSION 18) ;; <-- leak happens in both React 17 and 18
+
 (defn init []
-  (dom/render [leak-view] (.getElementById js/document "root"))
+  (let [root (js/document.getElementById "root")]
+    (case REACT_VERSION
+      17 (rd/render [leak-view] root) ;; <-- falls back to React 17 behavior
+      18 (rdc/render (rdc/create-root root) [leak-view])))
+
   (go
     (doseq [obj (cycle objs)]
       (reset! obj* obj)
