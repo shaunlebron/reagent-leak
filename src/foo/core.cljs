@@ -10,21 +10,14 @@
 
 (defn leak-view []
   (let [k (hash @obj*)]
-    [:table
-     [:tbody {:key k}
-      (doall
-        (for [i (range 100)]
-          [:tr {:key i}
-           (doall
-             (for [j (range 100)]
-               [:td {:key j}]))]))]]))
+    [:table {:key k}  ;; <-- simplest way to cause the memory leak, but can be moved to :tr’s key as well
+     (for [i (range 100)]
+       [:tr {:key i}
+        (for [j (range 100)]
+          [:td {:key j}])])]))
 
 (defn make-obj []
-  {:rows (for [i (range 20)]
-           {:a (rand-nth [true false])
-            :b (rand)
-            :c (rand)
-            :d (rand)})})
+  {:nums (take 20 (repeatedly rand))})
 
 (def objs [(make-obj)
            (make-obj)])
